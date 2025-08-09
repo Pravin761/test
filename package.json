@@ -1,0 +1,35 @@
+{
+  "name": "evm-gateway-contracts-private",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "yarn test:contract:local",
+    "test:all": "yarn test:contract:all-forks && yarn test:js",
+    "test:contract:local": "forge test --no-match-path 'test/BytecodeMatch.t.sol'",
+    "test:contract:all-forks": "./scripts/test_all_forks.sh",
+    "test:js": "./scripts/test_js.sh",
+    "test:gas": "FORGE_GAS_REPORT=true forge test",
+    "format": "forge fmt --check",
+    "format:fix": "forge fmt",
+    "lint": "yarn lint:src && yarn lint:test && yarn lint:script",
+    "lint:src": "solhint --disc -c .solhint-src.json './src/**/*.sol'",
+    "lint:test": "solhint --disc -c .solhint-test.json './test/**/*.sol'",
+    "lint:script": "solhint --disc -c .solhint-script.json './script/**/*.sol'",
+    "lint:fix": "yarn lint:src --fix && yarn lint:test --fix && yarn lint:script --fix",
+    "artifacts": "./scripts/compile-artifacts.sh",
+    "sizes": "forge build --sizes; ./scripts/contract_sizes.sh",
+    "verify": "bash ./scripts/verify-contracts.sh",
+    "ci": "yarn format && yarn lint && yarn artifacts && yarn sizes && yarn test:all && echo 'Local CI passed!'",
+    "coverage": "./scripts/coverage.sh",
+    "mine-salts": "./scripts/mine_deployment_salts.sh"
+  },
+  "license": "Apache-2.0",
+  "type": "module",
+  "devDependencies": {
+    "ethers": "6.14.0",
+    "mocha": "11.2.2",
+    "path": "0.12.7",
+    "solhint": "5.0.5",
+    "viem": "2.30.0"
+  },
+  "packageManager": "yarn@4.7.0"
+}
